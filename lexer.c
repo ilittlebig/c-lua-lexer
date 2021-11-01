@@ -129,13 +129,15 @@ char* token_to_str(const token_type_t type) {
 		case UNCLOSED_STRING_LITERAL: return "unclosed_string_literal";
 		case IDENT:                   return "ident";
 
-		case ASSIGN:     return "assign";
-		case GREATER_EQ: return "greater_eq";
-		case LESS_EQ:    return "less_eq";
-		case EQ:         return "eq";
-		case NOT_EQ:     return "not_eq";
-		case GREATER:    return "greater";
-		case LESS:       return "less";
+		case ASSIGN:      return "assign";
+		case GREATER_EQ:  return "greater_eq";
+		case LESS_EQ:     return "less_eq";
+		case EQ:          return "eq";
+		case NOT_EQ:      return "not_eq";
+		case GREATER:     return "greater";
+		case LESS:        return "less";
+		case SHIFT_LEFT:  return "shift_left";
+		case SHIFT_RIGHT: return "shift_right";
 
 		case ADD: return "add";
 		case SUB: return "sub";
@@ -433,17 +435,27 @@ static token_t* read_other_tokens() {
 		case '~':
 			token->type = get_matching_token_type("~=", NOT_EQ, UNIDENTIFIED);
 			break;
-		case '>':
-			token->type = get_matching_token_type(">=", GREATER_EQ, GREATER);
-			break;
-		case '<':
-			token->type = get_matching_token_type("<=", LESS_EQ, LESS);
-			break;
 		case '=':
 			token->type = get_matching_token_type("==", EQ, ASSIGN);
 			break;
 		case ':':
 			token->type = get_matching_token_type("::", DOUBLE_COLON, COLON);
+			break;
+		case '>':
+			if (starts_with(tokenizer->input, ">>", tokenizer->pos)) {
+				tokenizer->pos += 2;
+				token->type = SHIFT_RIGHT;
+			} else {
+				token->type = get_matching_token_type(">=", GREATER_EQ, GREATER);
+			}
+			break;
+		case '<':
+			if (starts_with(tokenizer->input, "<<", tokenizer->pos)) {
+				tokenizer->pos += 2;
+				token->type = SHIFT_LEFT;
+			} else {
+				token->type = get_matching_token_type("<=", LESS_EQ, LESS);
+			}
 			break;
 		case '-':
 			if (starts_with(tokenizer->input, "--[[", tokenizer->pos)) {
