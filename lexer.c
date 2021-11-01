@@ -98,7 +98,7 @@ static int compare(const char* str1, const char* str2) {
 	return 0;
 }
 
-static char* token_to_str(const token_type_t type) {
+char* token_to_str(const token_type_t type) {
 	switch (type) {
 		case LOCAL:    return "local";
 		case IF:       return "if";
@@ -127,7 +127,7 @@ static char* token_to_str(const token_type_t type) {
 		case FLOAT:                   return "float";
 		case STRING_LITERAL:          return "string_literal";
 		case UNCLOSED_STRING_LITERAL: return "unclosed_string_literal";
-		case IDENT:					  return "ident";
+		case IDENT:                   return "ident";
 
 		case ASSIGN:     return "assign";
 		case GREATER_EQ: return "greater_eq";
@@ -591,42 +591,4 @@ token_t** tokenize(const char* input) {
 	tokens = realloc(tokens, size * sizeof(token_t));
 	tokens[size] = token;
 	return tokens;
-}
-
-/* Usage */
-#define BUFFER_SIZE 1 * 1024 * 1024
-#define ITERATIONS 10 * 1024
-
-char* read_file(const char* filename) {
-	FILE *fp;
-	char tmp[BUFFER_SIZE];
-
-    fp = fopen(filename, "rb");
-    for(int i = 0; i < ITERATIONS; ++i) {
-        fread(tmp, BUFFER_SIZE, 1, fp);
-    }
-    fclose(fp);
-
-	char* buffer = malloc(BUFFER_SIZE);
-	memcpy(buffer, tmp, BUFFER_SIZE);
-	return buffer;
-}
-
-int main() {
-	const char* buffer = read_file("tmp.lua");
-	token_t** tokens = tokenize(buffer);
-
-	size_t i = 0;
-	while (tokens[i]->type != END_OF_FILE) {
-		token_t* token = tokens[i++];
-		if (token->value) {
-			if (token->type == STRING_LITERAL) {
-				printf("<type: %s | value: \"%s\">\n", token_to_str(token->type), token->value);
-			} else {
-				printf("<type: %s | value: %s>\n", token_to_str(token->type), token->value);
-			}
-		} else {
-			printf("<type: %s>\n", token_to_str(token->type));
-		}
-	}
 }

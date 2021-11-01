@@ -39,8 +39,9 @@ typedef struct tokenizer_t {
 	size_t pos;
 } tokenizer_t;
 
-tokenizer_t* tokenizer;
+static tokenizer_t* tokenizer;
 
+char* token_to_str(const token_type_t type);
 token_t** tokenize(const char* input);
 
 #endif /* LEXER_H */
