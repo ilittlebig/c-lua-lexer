@@ -36,7 +36,7 @@ char* read_file(const char* filename) {
 }
 
 int main() {
-	const char* buffer = read_file("tmp.lua");
+	const char* buffer = read_file("tests/tmp.lua");
 	token_t** tokens = tokenize(buffer);
 
 	size_t i = 0;
