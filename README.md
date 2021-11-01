@@ -42,6 +42,6 @@ where:
 I would like the lexical analyzer to be about 20x-50x faster than how it is performing right now, but that is of course easier said than done, and may or may not be done in the future.
 
 ## References
-[Lexical Analysis](https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables)
+[Lexical Analysis](https://en.wikipedia.org/wiki/Lexical_analysis)
 
 [Strategies For Fast Lexical Analysis when Parsing Programming Languages](https://www.nothings.org/computer/lexing.html)
