@@ -56,7 +56,7 @@ static int is_eof() {
 
    An identifier can start with:
        any alphabetic char
-	   '_'
+       '_'
 
    A number is not available in this case. */
 
@@ -74,7 +74,7 @@ static int is_valid_ident_start() {
 
    An identifier can have:
        any alphabetic char
-	   any numeric char
+       any numeric char
        '_'
 
    Anything that does not follow these rules, should
