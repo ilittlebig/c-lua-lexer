@@ -123,11 +123,10 @@ char* token_to_str(const token_type_t type) {
 		case DO:       return "do";
 		case BREAK:    return "break";
 
-		case INT:                     return "int";
-		case FLOAT:                   return "float";
+		case IDENT:                   return "ident";
+		case NUMBER:                  return "number";
 		case STRING_LITERAL:          return "string_literal";
 		case UNCLOSED_STRING_LITERAL: return "unclosed_string_literal";
-		case IDENT:                   return "ident";
 
 		case ASSIGN:      return "assign";
 		case GREATER_EQ:  return "greater_eq";
@@ -224,51 +223,31 @@ static token_t* read_digit() {
 	char* digit = malloc(sizeof(char));
 	char* input = tokenizer->input;
 
-	int is_float = 0;
-	int is_hex = 0;
-
 	size_t size = 0;
 
 	if (starts_with(input, "0x", tokenizer->pos) || starts_with(input, "0X", tokenizer->pos)) {
-		is_hex = 1;
-		digit = realloc(digit, ++size + 1);
-		digit[size-1] = input[tokenizer->pos++];
-		digit = realloc(digit, ++size + 1);
-		digit[size-1] = input[tokenizer->pos++];
+		size += 2;
+		digit = realloc(digit, size + 1);
+		memcpy(digit, "0x", size);
+		tokenizer->pos += 2;
 	}
 
-	for (;;) {
-		const char c = input[tokenizer->pos];
-		if (c == '.') {
-			is_float = 1;
-			digit = realloc(digit, ++size + 1);
-			digit[size-1] = c;
-		} else if (c == '-' || isdigit(c)) {
-			digit = realloc(digit, ++size + 1);
-			digit[size-1] = c;
-		} else if (c == 'e' || c == 'E') {
-			digit = realloc(digit, ++size + 1);
-			digit[size-1] = c;
-
-			if (c == '-' || c == '+') {
-				digit = realloc(digit, ++size + 1);
-				digit[size-1] = c;
-			}
-		} else if (is_hex && isxdigit(c)) {
-			digit = realloc(digit, ++size + 1);
-			digit[size-1] = c;
-		} else {
-			break;
-		}
+	do {
+		digit = realloc(digit, ++size + 1);
+		digit[size-1] = input[tokenizer->pos];
 		tokenizer->pos++;
-	}
-	digit[size] = '\0';
+	} while (
+		isdigit(input[tokenizer->pos]) ||
+		isxdigit(input[tokenizer->pos]) ||
+		input[tokenizer->pos] == '.' ||
+		input[tokenizer->pos] == '-' ||
+		input[tokenizer->pos] == 'e' ||
+		input[tokenizer->pos] == 'E' ||
+		input[tokenizer->pos] == '+' ||
+		input[tokenizer->pos] == '-'
+	);
 
-	if (is_float) {
-		token->type = FLOAT;
-	} else {
-		token->type = INT;
-	}
+	token->type = NUMBER;
 	token->value = digit;
 	return token;
 }
