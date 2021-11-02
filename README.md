@@ -23,7 +23,7 @@ The current performance on an `AMD Ryzen 7 3700X` is as follows:
 | 100K | 1 | 0.3s |
 | 1M | 1 | 43s |
 | 100K | 123456789 | 2s |
-| 1M | 123456789 | 21.4s |
+| 1M | 123456789 | ? |
 
 ### Strings
 | N | Input Data | Time |
@@ -31,7 +31,7 @@ The current performance on an `AMD Ryzen 7 3700X` is as follows:
 | 100K | "a" | 1.4s |
 | 1M | "a" | 108s |
 | 100K | "abcdefghijklmnopqrstuvwxyz" | 92s |
-| 1M | "abcdefghijklmnopqrstuvwxyz" | 88s |
+| 1M | "abcdefghijklmnopqrstuvwxyz" | ? |
 
 
 where:
