@@ -39,8 +39,6 @@ where:
 - `Input Data` is the task being run
 - `Time` is how long it took in seconds to complete that task
 
-I would like the lexical analyzer to be about 20x-50x faster than how it is performing right now, but that is of course easier said than done, and may or may not be done in the future.
-
 ## References
 [Lexical Analysis](https://en.wikipedia.org/wiki/Lexical_analysis)
 
