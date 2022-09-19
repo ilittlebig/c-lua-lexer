@@ -1,12 +1,13 @@
 # Lua Lexer
 A Lua lexer written in C.
+
+( Please keep in mind that this was my first time writing a lexer in the C language. I concentrated on the structure rather than the speed of the lexer. )
+
 ## Performance
 The lexer is currently parsing the input stream byte for byte which means that it is not as fast as it could be if it were written as a `Deterministic State Machine`.
 
 That is fine for now, but I would like to change that some time in the near future. 
 Though there is probably something else that is making the program a lot slower than it should be, because parsing a single digit repeated a million times should not take longer than parsing nine digits a million times.
-
-( Please keep in mind that this was my first time writing a lexer in the C language. I concentrated on the structure rather than the speed of the lexer. )
 
 The current performance on an `AMD Ryzen 7 3700X` is as follows:
 
