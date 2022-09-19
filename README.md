@@ -1,6 +1,9 @@
 # Lua Lexer
 A Lua lexer written in C.
 
+# Preface
+Please do keep in mind that this was my first time writing a lexer in the C language.
+
 ## Performance
 The lexer is currently parsing the input stream byte for byte which means that it is not as fast as it could be if it were written as a `Deterministic State Machine`.
 
